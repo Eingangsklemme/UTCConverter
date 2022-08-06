@@ -5,7 +5,7 @@ const { token } = require('./config.json')
 // New client instance
 const client = new Client({ intents: [GatewayIntentBits.Guilds] })
 
-// When client ist ready...
+// When client is ready...
 client.once('ready', () => {
     console.log('Client ready alla!')
 })

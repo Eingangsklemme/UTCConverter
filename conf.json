@@ -1,5 +1,7 @@
 {
     "_comment_": "Rename this file to 'config.json' rather tha just 'conf' and just insert your own shit",
 
+    "clientId": "",
+    "guildId": "",
     "token": ""
 }
