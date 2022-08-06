@@ -6,9 +6,9 @@ const { clientId, guildId, token } = require('./config.json')
 // !!! List with commands !!!
 const commands = [
 	new SlashCommandBuilder().setName('cock').setDescription('makes something useful i guess idk lol'),
-	new SlashCommandBuilder().setName('time').setDescription('Outputs the current UTC time'),
-	new SlashCommandBuilder().setName('add-timezone').setDescription('Adds one timezone to your list'),
-	new SlashCommandBuilder().setName('remove-timezone').setDescription('Removes one timezone of your list'),
+	new SlashCommandBuilder().setName('time-utc').setDescription('Outputs the current UTC time'),
+	new SlashCommandBuilder().setName('timezone-add').setDescription('Adds one timezone to your list'),
+	new SlashCommandBuilder().setName('timezone-remove').setDescription('Removes one timezone of your list'),
 ]
 	.map(command => command.toJSON());
 

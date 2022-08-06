@@ -18,6 +18,9 @@ client.on('interactionCreate', async interaction => {
 
     if (commandName === 'cock') {
         await interaction.reply('Justins cock ist lang')
+    } else if (commandName === 'time-utc') {
+        const utcTime = 0000
+        await interaction.reply('UTC ' + utcTime)
     }
 })
 
