@@ -1,3 +1,3 @@
-const token = require('./config.json')
+const { token } = require('./config.json')
 
 console.log(token)
