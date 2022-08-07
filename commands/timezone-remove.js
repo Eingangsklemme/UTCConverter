@@ -6,6 +6,7 @@ module.exports = {
         .setDescription('Removes one timezone of this chanels timezone-list'),
     async execute(interaction) {
         //some code goes here...
+        const timezone = 'berlin'
         await interaction.reply('Removed timezone ' + timezone + ' of this chanels timezone-list.')
     },
 }
