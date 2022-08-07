@@ -1,9 +1,22 @@
 // Just the main shit ya know
-const { Client, GatewayIntentBits, CommandInteractionOptionResolver } = require('discord.js')
+const fs = require('node:fs')
+const path = require('node:path')
+const { Client, GatewayIntentBits, CommandInteractionOptionResolver, Collection } = require('discord.js')
 const { token } = require('./config.json')
 
 // New client instance
 const client = new Client({ intents: [GatewayIntentBits.Guilds] })
+
+// Initializes command-collection
+client.commands = new Collection()
+const commandsPath = path.join(__dirname, 'commands')
+const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'))
+
+for (const file of commandFiles) {
+    const filePath = path.join(commandsPath, file)
+    const command = require(filePath)
+    client.commands.set(command.data.name, command)
+}
 
 // When client is ready...
 client.once('ready', () => {
@@ -17,6 +30,10 @@ function timeUTC() {
     const minsInt = time.getMinutes()
     let hours = 0
     let mins = 0
+
+    if (hoursInt < 0) {
+        hoursInt = 24 - hoursInt
+    }
 
     if (hoursInt < 10) {
         hours = '0' + hoursInt
