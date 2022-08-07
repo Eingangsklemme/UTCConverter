@@ -57,7 +57,7 @@ function timeUTC() {
 client.on('interactionCreate', async interaction => {
     if (!interaction.isChatInputCommand()) return
 
-    const commands = client.commands.get(interaction.commandName)
+    const command = client.commands.get(interaction.commandName)
 
     if (!command) return
 
@@ -65,7 +65,7 @@ client.on('interactionCreate', async interaction => {
         await command.execute(interaction)
     } catch (error) {
         console.error(error)
-        await interaction.reply({ content: 'There was a fucking terrible error while executing this shitty command! Just rethink you fucking life!', ephemeral: true})
+        await interaction.reply({ content: 'There was a fucking terrible error while executing this shitty command! Just rethink you whole fucking useless life!', ephemeral: true})
     }
 
 })

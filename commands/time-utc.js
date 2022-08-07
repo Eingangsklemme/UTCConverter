@@ -2,13 +2,14 @@ const { SlashCommandBuilder } = require('discord.js')
 
 function timeUTC() {
     const time = new Date()
-    const hoursInt = time.getHours() - 2
+    let hoursInt = time.getHours() - 2
     const minsInt = time.getMinutes()
     let hours = 0
     let mins = 0
 
     if (hoursInt < 0) {
-        hoursInt = 24 - hoursInt
+        const uselessshit = hoursInt * -1
+        hoursInt = 24 - uselessshit
     }
 
     if (hoursInt < 10) {
