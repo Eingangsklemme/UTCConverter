@@ -11,6 +11,10 @@ module.exports = {
         let hours = 0
         let mins = 0
 
+        if (hoursInt < 0) {
+            hoursInt = 24 - hoursInt
+        }
+
         if (hoursInt < 10) {
             hours = '0' + hoursInt
         } else {
