@@ -14,6 +14,13 @@ const commands = [
 
 const rest = new REST({ version: '10' }).setToken(token)
 
+/* Only for one guild (guildId in config.json)
+rest.put(Routes.applicationGuildCommands(clientId, guildId), { body: commands })
+	.then(() => console.log('Successfully registered application commands.'))
+	.catch(console.error)
+*/
+
+// deploys commands globally in every guild
 rest.put(Routes.applicationCommands(clientId), { body: commands })
 	.then(() => console.log('Successfully registered application commands.'))
 	.catch(console.error)
