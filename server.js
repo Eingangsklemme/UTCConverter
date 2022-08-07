@@ -24,6 +24,7 @@ client.once('ready', () => {
 })
 
 //UTC-time-shit
+/*
 function timeUTC() {
     const time = new Date()
     const hoursInt = time.getHours()-2
@@ -50,22 +51,23 @@ function timeUTC() {
     const utcTime = hours + mins
     return utcTime
 }
+*/
 
 // Reactions to commands
 client.on('interactionCreate', async interaction => {
     if (!interaction.isChatInputCommand()) return
 
-    const { commandName } = interaction
+    const commands = client.commands.get(interaction.commandName)
 
-    if (commandName === 'cock') {
-        await interaction.reply('Der Cock aller BAH Cons. Mitarbeiter ist unfassbar groß')
-    } else if (commandName === 'time-utc') {
-        await interaction.reply('UTC ' + timeUTC())
-    } else if (commandName === 'timezone-add') {
-        await interaction.reply('Timezone added.')
-    } else if (commandName === 'timezone-remove') {
-        await interaction.reply('Timezone removed.')
+    if (!command) return
+
+    try {
+        await command.execute(interaction)
+    } catch (error) {
+        console.error(error)
+        await interaction.reply({ content: 'There was a fucking terrible error while executing this shitty command! Just rethink you fucking life!', ephemeral: true})
     }
+
 })
 
 // Login to DC with token
