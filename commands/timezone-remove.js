@@ -17,7 +17,7 @@ module.exports = {
     async execute(interaction) {
         //some code goes here...
         const timezone = interaction.options.getString('timezone')
-        await interaction.reply('Removed timezone "' + timezone + '" of this chanels timezone-list.')
+        await interaction.reply('Removed timezone "' + timezone + '" of this channels timezone-list.')
     },
 }
 

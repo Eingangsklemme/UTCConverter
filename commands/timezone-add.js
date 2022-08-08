@@ -1,5 +1,9 @@
 const { SlashCommandBuilder } = require('discord.js')
 
+function addTimeZone(timezone) {
+    console.log(timezone)
+}
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('timezone-add')
@@ -15,9 +19,9 @@ module.exports = {
                 )
         ),
     async execute(interaction) {
-        //some code goes here...
         const timezone = interaction.options.getString('timezone')
-        await interaction.reply('Added timezone "' + timezone + '" to this chanels timezone-list.')
+        addTimeZone(timezone)
+        await interaction.reply('Added timezone "' + timezone + '" to this channels timezone-list.')
     },
 }
 
