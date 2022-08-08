@@ -1,6 +1,7 @@
 // Just the main shit ya know
 const fs = require('node:fs')
 const path = require('node:path')
+const Sequelize = require('sequelize') //DB-shit
 const { Client, GatewayIntentBits, CommandInteractionOptionResolver, Collection } = require('discord.js')
 const { token } = require('./config.json')
 
@@ -42,6 +43,7 @@ client.on('interactionCreate', async interaction => {
     if (!interaction.isChatInputCommand()) return
 
     const command = client.commands.get(interaction.commandName)
+    const { commandName } = interaction //DB-shit
 
     if (!command) return
 
