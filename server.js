@@ -18,42 +18,26 @@ for (const file of commandFiles) {
     client.commands.set(command.data.name, command)
 }
 
+// Dynamically react to events
+const eventsPath = path.join(__dirname, 'events');
+const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
+
+for (const file of eventFiles) {
+	const filePath = path.join(eventsPath, file);
+	const event = require(filePath);
+	if (event.once) {
+		client.once(event.name, (...args) => event.execute(...args));
+	} else {
+		client.on(event.name, (...args) => event.execute(...args));
+	}
+}
+
 // When client is ready...
 client.once('ready', () => {
     console.log('Client ready alla!')
 })
 
-//UTC-time-shit
-/*
-function timeUTC() {
-    const time = new Date()
-    const hoursInt = time.getHours()-2
-    const minsInt = time.getMinutes()
-    let hours = 0
-    let mins = 0
-
-    if (hoursInt < 0) {
-        hoursInt = 24 - hoursInt
-    }
-
-    if (hoursInt < 10) {
-        hours = '0' + hoursInt
-    } else {
-        hours = '' + hoursInt
-    }
-
-    if (minsInt < 10) {
-        mins = '0' + minsInt
-    } else {
-        mins = '' + minsInt
-    }
-
-    const utcTime = hours + mins
-    return utcTime
-}
-*/
-
-// Reactions to commands
+// Dynamically react to commands
 client.on('interactionCreate', async interaction => {
     if (!interaction.isChatInputCommand()) return
 
@@ -67,7 +51,6 @@ client.on('interactionCreate', async interaction => {
         console.error(error)
         await interaction.reply({ content: 'There was a fucking terrible error while executing this shitty command! Just rethink you whole fucking useless life!', ephemeral: true})
     }
-
 })
 
 // Login to DC with token
