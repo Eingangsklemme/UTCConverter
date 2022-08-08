@@ -1,5 +1,9 @@
 const { SlashCommandBuilder } = require('discord.js')
 
+function removeTimezone(timezone) {
+    console.log(timezone)
+}
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('timezone-remove')
@@ -15,8 +19,8 @@ module.exports = {
                 )
         ),
     async execute(interaction) {
-        //some code goes here...
         const timezone = interaction.options.getString('timezone')
+        removeTimezone(timezone)
         await interaction.reply('Removed timezone "' + timezone + '" of this channels timezone-list.')
     },
 }
