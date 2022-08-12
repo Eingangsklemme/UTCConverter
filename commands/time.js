@@ -3,6 +3,8 @@ const { SlashCommandBuilder, time } = require('discord.js')
 let utc = () => {
     const systemTime = new Date()
     return {
+        year: systemTime.getUTCFullYear(),
+        month: systemTime.getUTCMonth(),
         day: systemTime.getUTCDate(),
         hours: systemTime.getUTCHours(),
         minutes: systemTime.getUTCMinutes()
@@ -49,12 +51,12 @@ function timeAdd(addDays, addHours, addMinutes) {
 }
 
 function formatTime(d, h, m) {
-    let timestamp = d + '. '
+    let timestamp = utc().year + '-' + utc().month + '-' + d + ' '
 
     if (h < 10) {
-        timestamp = timestamp + '0' + h
+        timestamp = timestamp + '0' + h + ':'
     } else {
-        timestamp = timestamp + h
+        timestamp = timestamp + h + ':'
     }
 
     if (m < 10) {
