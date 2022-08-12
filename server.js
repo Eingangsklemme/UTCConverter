@@ -77,7 +77,7 @@ client.on('interactionCreate', async interaction => {
         await command.execute(interaction)
     } catch (error) {
         console.error(error)
-        await interaction.reply({ content: 'There was a fucking terrible error while executing this shitty command! Just rethink you whole fucking useless life!', ephemeral: true})
+        await interaction.reply({ content: "You know you're stupid as hell if you expected this bot to work properly", ephemeral: true})
     }
 })
 

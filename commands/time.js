@@ -1,9 +1,9 @@
 const { SlashCommandBuilder, time } = require('discord.js')
-const systemTime = new Date()
 
 let utc = () => {
+    const systemTime = new Date()
     return {
-        day: systemTime.getUTCDay(),
+        day: systemTime.getUTCDate(),
         hours: systemTime.getUTCHours(),
         minutes: systemTime.getUTCMinutes()
     }
@@ -45,22 +45,22 @@ function timeAdd(addDays, addHours, addMinutes) {
         addedTime.day = utc.day
     }
 
-    return formatTime()
+    return formatTime(addedTime.day, addedTime.hour, addedTime.minute)
 }
 
-function formatTime() {
-    let timestamp = addedTime.day + '. '
+function formatTime(d, h, m) {
+    let timestamp = d + '. '
 
-    if (addedTime.hour < 10) {
-        timestamp = timestamp + '0' + addedTime.hour
+    if (h < 10) {
+        timestamp = timestamp + '0' + h
     } else {
-        timestamp = timestamp + addedTime.hour
+        timestamp = timestamp + h
     }
 
-    if (addedTime.minute < 10) {
-        timestamp = timestamp + '0' + addedTime.minute
+    if (m < 10) {
+        timestamp = timestamp + '0' + m
     } else {
-        timestamp = timestamp + addedTime.minute
+        timestamp = timestamp + m
     }
 
     return timestamp
@@ -90,7 +90,7 @@ module.exports = {
         const addHoursLol = interaction.options.getNumber('addhours')
         const addMinutesLol = interaction.options.getNumber('addminutes')
         if (addDaysLol == null && addHoursLol == null && addMinutesLol == null) {
-            await interaction.reply('UTC ' + utc().day + '. ' + utc().hours + utc().minutes)
+            await interaction.reply('UTC ' + formatTime(utc().day, utc().hours, utc().minutes))
         } else {
             await interaction.reply('UTC ' + timeAdd(addDaysLol, addHoursLol, addMinutesLol))
         }
