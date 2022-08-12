@@ -1,60 +1,98 @@
-const { SlashCommandBuilder } = require('discord.js')
+const { SlashCommandBuilder, time } = require('discord.js')
+const systemTime = new Date()
 
-function getTime(timezone) {
-    const time = 'deine mudda is ne zeit alla' //JUST FOR TEST PURPOSES!!!
-    return time
+let utc = () => {
+    return {
+        day: systemTime.getUTCDay(),
+        hours: systemTime.getUTCHours(),
+        minutes: systemTime.getUTCMinutes()
+    }
 }
 
-function timeUTC() {
-    const time = new Date()
-    let hoursInt = time.getHours() - 2
-    const minsInt = time.getMinutes()
-    let hours = 0
-    let mins = 0
+let addedTime = {
+    day: null,
+    hour: null,
+    minute: null
+}
 
-    if (hoursInt < 0) {
-        const uselessshit = hoursInt * -1
-        hoursInt = 24 - uselessshit
-    }
-
-    if (hoursInt < 10) {
-        hours = '0' + hoursInt
+function timeAdd(addDays, addHours, addMinutes) {
+    if (addMinutes != null) {
+        addedTime.minute = utc().minutes + addMinutes
+        if (addedTime.minute > 60) {
+            addedTime.hour = addedTime.hour + parseInt(addedTime.minute / 60)
+            addedTime.minute = addedTime.minute % 60
+        }
     } else {
-        hours = '' + hoursInt
+        addedTime.minute = utc.minutes
     }
 
-    if (minsInt < 10) {
-        mins = '0' + minsInt
+    if (addHours != null) {
+        addedTime.hour = utc().hours + addHours
+        if (addedTime.hour > 24) {
+            addedTime.day = addedTime.day + parseInt(addedTime.hour / 24)
+            addedTime.hour = addedTime.hour % 24
+        }
     } else {
-        mins = '' + minsInt
+        addedTime.hour = utc.hours
+    }
+    
+    if (addDays != null) {
+        addedTime.day = utc().day + addDays
+        if (addedTime.day > 31) {
+            console.log('fuck you')
+        }
+    } else {
+        addedTime.day = utc.day
     }
 
-    const utcTime = hours + mins
-    return utcTime
+    return formatTime()
+}
+
+function formatTime() {
+    let timestamp = addedTime.day + '. '
+
+    if (addedTime.hour < 10) {
+        timestamp = timestamp + '0' + addedTime.hour
+    } else {
+        timestamp = timestamp + addedTime.hour
+    }
+
+    if (addedTime.minute < 10) {
+        timestamp = timestamp + '0' + addedTime.minute
+    } else {
+        timestamp = timestamp + addedTime.minute
+    }
+
+    return timestamp
 }
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('time')
-        .setDescription('Gives back the time of the chosen timezone (leave empty for UTC)')
-        .addStringOption(option =>
-            option.setName('timezone')
-                .setDescription('Timezone you want the time of')
+        .setDescription('Gives back the configured time (leave other shit blank for UTC-time)')
+        .addNumberOption(option =>
+            option.setName('adddays')
+                .setDescription('Days added to current UTC')
                 .setRequired(false)
-                .setChoices(
-                    { name: 'Berlin', value: 'berlin' },
-                    { name: 'London', value: 'london' },
-                    { name: 'Vancouver', value: 'vancouver' },
-                )
+        )
+        .addNumberOption(option =>
+            option.setName('addhours')
+                .setDescription('Hours added to current UTC')
+                .setRequired(false)
+        )
+        .addNumberOption(option =>
+            option.setName('addminutes')
+                .setDescription('Minutes added to current UTC')
+                .setRequired(false)
         ),
     async execute(interaction) {
-        const timezone = interaction.options.getString('timezone')
-        const time = getTime(timezone)
-        if (timezone === null) {
-            await interaction.reply('UTC ' + timeUTC())
+        const addDaysLol = interaction.options.getNumber('adddays')
+        const addHoursLol = interaction.options.getNumber('addhours')
+        const addMinutesLol = interaction.options.getNumber('addminutes')
+        if (addDaysLol == null && addHoursLol == null && addMinutesLol == null) {
+            await interaction.reply('UTC ' + utc().day + '. ' + utc().hours + utc().minutes)
         } else {
-            await interaction.reply(timezone + ': ' + time)
+            await interaction.reply('UTC ' + timeAdd(addDaysLol, addHoursLol, addMinutesLol))
         }
     },
 }
-

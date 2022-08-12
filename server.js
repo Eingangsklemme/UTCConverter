@@ -8,6 +8,31 @@ const { token } = require('./config.json')
 // New client instance
 const client = new Client({ intents: [GatewayIntentBits.Guilds] })
 
+// Setting up the sqlite DB
+const sequelize = new Sequelize('database', 'user', 'password', {
+    host: 'localhost',
+    dialect: 'sqlite',
+    logging: false,
+    storage: 'database.sqlite',
+})
+
+const Timezones = sequelize.define('timezones', {
+    zone: {
+        type: Sequelize.STRING,
+        unique: true,
+    },
+    timeshiftUTCsummer: {
+        type: Sequelize.INTEGER,
+        default: 0,
+        allowNull: false,
+    },
+    timeshiftUTCwinter: {
+        type: Sequelize.INTEGER,
+        default: 0,
+        allowNull: false,
+    },
+})
+
 // Initializes command-collection
 client.commands = new Collection()
 const commandsPath = path.join(__dirname, 'commands')
@@ -35,6 +60,7 @@ for (const file of eventFiles) {
 
 // When client is ready...
 client.once('ready', () => {
+    Timezones.sync()
     console.log('Client ready alla!')
 })
 
