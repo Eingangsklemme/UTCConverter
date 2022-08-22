@@ -10,5 +10,5 @@ Still nothing lol
 ### What should it do in the more far future?
 So the plans for the future are to usa a proper time-api as it makes the bot safer, more stable and very likely faster bc my own code is shit.
 
-### Also, what's you mom doin'?
+### Also, what's your mom doin'?
 Don't judge my code, its apparently less cheap than your mom.
