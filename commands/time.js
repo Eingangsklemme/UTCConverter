@@ -37,7 +37,7 @@ function timeAdd(addDays, addHours, addMinutes) {
     } else {
         addedTime.hour = utc.hours
     }
-    
+
     if (addDays != null) {
         addedTime.day = utc().day + addDays
         if (addedTime.day > 31) {
